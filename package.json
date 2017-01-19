@@ -16,9 +16,6 @@
     "url": "https://github.com/isaacs/function-loop/issues"
   },
   "homepage": "https://github.com/isaacs/function-loop#readme",
-  "dependencies": {
-    "bluebird": "^3.4.7"
-  },
   "devDependencies": {
     "tap": "^9.0.3"
   },
