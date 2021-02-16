@@ -1,14 +1,13 @@
-var t = require('tap')
-var loop = require('./')
-var obj = {}
+const t = require('tap')
+const loop = require('./')
+const obj = {}
 
 t.test('basic passing operation', function (t) {
-  var i = 0
+  let i = 0
   loop(obj, [
-    function (cb) {
+    function () {
       t.equal(this, obj, 'this is correct 1')
       t.equal(i, 0, '0')
-      cb()
       i++
     },
     function () {
@@ -16,15 +15,15 @@ t.test('basic passing operation', function (t) {
       t.equal(i++, 1, '1')
       return Promise.resolve(true)
     },
-    function (cb) {
+    function () {
       t.equal(this, obj, 'this is correct 3')
       t.equal(i++, 2, '2')
-      setTimeout(cb)
+      return new Promise(res => setTimeout(res))
     },
-    function (cb) {
+    function () {
       t.equal(this, obj, 'this is correct 4')
       t.equal(i++, 3, '3')
-      process.nextTick(cb)
+      return Promise.resolve('ok')
     }
   ], function () {
     t.equal(this, obj, 'this is correct 5')
@@ -38,7 +37,7 @@ t.test('basic passing operation', function (t) {
 
 t.test('throws', function (t) {
   loop(obj, [
-    function (cb) {
+    function () {
       t.equal(this, obj, 'this is correct')
       throw new Error('foo')
     },
@@ -54,13 +53,13 @@ t.test('throws', function (t) {
 })
 
 t.test('all sync', function (t) {
-  var i = 0
+  let i = 0
   loop(obj, [
-    function (cb) { t.equal(i++, 0); cb() },
-    function (cb) { t.equal(i++, 1); cb() },
-    function (cb) { t.equal(i++, 2); cb() },
-    function (cb) { t.equal(i++, 3); cb() },
-    function (cb) { t.equal(i++, 4); cb() }
+    function () { t.equal(i++, 0) },
+    function () { t.equal(i++, 1) },
+    function () { t.equal(i++, 2) },
+    function () { t.equal(i++, 3) },
+    function () { t.equal(i++, 4) }
   ], function () {
     t.equal(i++, 5)
   }, function (er) {
@@ -72,7 +71,7 @@ t.test('all sync', function (t) {
 
 t.test('broken promise', function (t) {
   loop(obj, [
-    function (cb) {
+    function () {
       t.equal(this, obj, 'this is correct')
       return Promise.reject(new Error('foo'))
     },
@@ -85,38 +84,5 @@ t.test('broken promise', function (t) {
     t.equal(this, obj, 'this is correct')
     t.match(er, { message: 'foo' })
     t.end()
-  })
-})
-
-t.test('cb err', function (t) {
-  loop(obj, [
-    function (cb) {
-      t.equal(this, obj, 'this is correct')
-      cb(new Error('foo'))
-    },
-    function () {
-      t.fail('should not get here')
-    }
-  ], function () {
-    t.fail('should not get here')
-  }, function (er) {
-    t.equal(this, obj, 'this is correct')
-    t.match(er, { message: 'foo' })
-    t.end()
-  })
-})
-
-t.test('cb and also promise resolve', function (t) {
-  t.plan(1)
-  loop(obj, [
-    function (cb) {
-      return Promise.resolve('foo').then(function () {
-        cb()
-      })
-    }
-  ], function () {
-    t.pass('finished one time')
-  }, function (er) {
-    throw er
   })
 })
