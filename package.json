@@ -1,12 +1,16 @@
 {
   "name": "function-loop",
   "version": "2.0.1",
-  "main": "index.js",
   "files": [
     "index.js"
   ],
+  "main": "index.js",
   "scripts": {
-    "test": "tap test.js --100"
+    "test": "tap",
+    "snap": "tap",
+    "preversion": "npm test",
+    "postversion": "npm publish",
+    "prepublishOnly": "git push origin --follow-tags"
   },
   "repository": {
     "type": "git",
@@ -20,7 +24,10 @@
   },
   "homepage": "https://github.com/isaacs/function-loop#readme",
   "devDependencies": {
-    "tap": "^9.0.3"
+    "tap": "^15.1.6"
   },
-  "description": "Run a list of functions in order in a given object context.  The functions can be callback-taking or promise-returning."
+  "description": "Run a list of functions in order in a given object context.  The functions can be callback-taking or promise-returning.",
+  "tap": {
+    "check-coverage": true
+  }
 }

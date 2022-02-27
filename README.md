@@ -1,8 +1,8 @@
 # function-loop
 
-Run a list of functions in order in a given object context.  The
-functions can be Promise-returning to do async operations, or return
-anything else if they are done synchronously.
+Run a list of functions in order in a given object context.  The functions
+can be Promise-returning to do async operations, or return anything else if
+they are done synchronously.
 
 This module is
 [zalgo-exposing](http://blog.izs.me/post/59142742143/designing-apis-for-asynchrony),
@@ -16,9 +16,8 @@ defer if functions are called synchronously.
 
 `loop(context, functionList, doneCallback, errorCallback)`
 
-Run all the functions in the context of the `context` object, and then
-call the `doneCallback` or call the `errorCallback` if there are any
-errors.
+Run all the functions in the context of the `context` object, and then call
+the `doneCallback` or call the `errorCallback` if there are any errors.
 
 Functions can return a Promise to do async operations, or not if they are
 done synchronously.  Throws are reported to the `errorCallback` provided.
