@@ -1,2 +1,5 @@
-.nyc_output
-node_modules
+/.nyc_output
+/coverage
+/node_modules
+/dist
+/lib
