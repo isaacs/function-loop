@@ -1,5 +1,5 @@
 import t from 'tap'
-import loop from '../dist/cjs/index.js'
+import { loop } from '../dist/cjs/index.js'
 
 t.test('basic passing operation', function (t) {
   let i = 0

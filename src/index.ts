@@ -1,10 +1,8 @@
-const loop = (
+export const loop = (
   arr: ((...a: any) => any)[],
   cb: () => any,
   onerr: (er: any) => any
 ) => loop_(arr, cb, onerr, 0)
-
-export default loop
 
 const loop_ = <T extends () => any>(
   arr: ((...a: any[]) => any)[],
@@ -14,7 +12,7 @@ const loop_ = <T extends () => any>(
 ): ReturnType<T> | Promise<ReturnType<T>> => {
   while (i < arr.length) {
     const fn = arr[i]
-    let ret = null
+    let ret: any = null
     try {
       ret = fn()
     } catch (er) {

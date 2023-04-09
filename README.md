@@ -6,8 +6,8 @@ function at the end.
 ## USAGE
 
 ```ts
-import loop from 'function-loop'
-// or `const {default:loop} = require('function-loop')
+import { loop } from 'function-loop'
+// or `const { loop } = require('function-loop')
 
 const loop = require('./dist/cjs/index.js').default
 
